@@ -1,0 +1,274 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bitcoin Barometer API",
+    "version": "1.0.0",
+    "description": "Nakamoto Notes' open Bitcoin Barometer feed: a composite 0-100 Heat Score and zone describing Bitcoin's market-cycle position against history (not a price forecast). Keyless; documented limit 10 requests per minute, responses cached 5 minutes, HTTP 503 instead of a number when a reading cannot be produced. Licence CC BY 4.0 (attribute NakamotoNotes). Built from https://nakamotonotes.com/open and live probes on 2026-10-23; the live payload carries undocumented price, indicatorHeats, zoneBands and searchInterest fields. Omitted: barometer-history.csv (daily date,score,zone CSV), rss.xml, and the MCP server. Unverified: the item type of `degraded` (only an empty list seen) and the 503 body.",
+    "contact": {
+      "url": "https://nakamotonotes.com/open"
+    },
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://nakamotonotes.com/open",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/barometer.json": {
+      "get": {
+        "summary": "Get the current Barometer reading",
+        "description": "Current Heat Score, zone, computation time, indicator readings and the degraded-indicator list.",
+        "operationId": "getBarometerReading",
+        "responses": {
+          "200": {
+            "description": "The current reading",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BarometerReading"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/badge.json": {
+      "get": {
+        "summary": "Get the Shields badge",
+        "description": "Current score and zone in Shields.io endpoint-badge format.",
+        "operationId": "getBadge",
+        "responses": {
+          "200": {
+            "description": "The badge payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Badge"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BarometerReading": {
+        "type": "object",
+        "description": "The current Bitcoin Barometer reading.",
+        "properties": {
+          "score": {
+            "type": "integer",
+            "description": "Heat Score, 0-100.",
+            "example": 24
+          },
+          "heatScore": {
+            "type": "number",
+            "description": "Heat Score as a 0-1 fraction (score / 100, unrounded)."
+          },
+          "zone": {
+            "type": "string",
+            "description": "Zone for the score: Chill, Neutral, Heated or Euphoric.",
+            "example": "Chill"
+          },
+          "zoneBands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "zone": {
+                  "type": "string",
+                  "description": "Zone name."
+                },
+                "min": {
+                  "type": "integer",
+                  "description": "Lowest score in the zone."
+                },
+                "max": {
+                  "type": "integer",
+                  "description": "Highest score in the zone."
+                }
+              },
+              "additionalProperties": true
+            },
+            "description": "Score bands for each zone."
+          },
+          "computedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the reading was computed (ISO 8601)."
+          },
+          "degraded": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Names of indicators that could not be refreshed (empty when all are fresh; item type inferred from the docs, only an empty list was seen)."
+          },
+          "indicators": {
+            "type": "object",
+            "description": "Raw indicator readings.",
+            "properties": {
+              "monthlyRSI": {
+                "type": "number",
+                "description": "Monthly RSI.",
+                "nullable": true
+              },
+              "mayerMultiple": {
+                "type": "string",
+                "description": "Mayer Multiple, returned as a numeric STRING (e.g. '1.12').",
+                "nullable": true
+              },
+              "piCycleProximity": {
+                "type": "number",
+                "description": "Pi Cycle Top proximity (%).",
+                "nullable": true
+              },
+              "mvrvZScore": {
+                "type": "number",
+                "description": "MVRV Z-Score.",
+                "nullable": true
+              },
+              "nupl": {
+                "type": "number",
+                "description": "Net Unrealised Profit/Loss (%).",
+                "nullable": true
+              },
+              "puellMultiple": {
+                "type": "number",
+                "description": "Puell Multiple.",
+                "nullable": true
+              },
+              "twoYearHighProximity": {
+                "type": "number",
+                "description": "Proximity to the two-year high (%).",
+                "nullable": true
+              },
+              "roc90": {
+                "type": "number",
+                "description": "90-day rate of change (%).",
+                "nullable": true
+              },
+              "fearAndGreed": {
+                "type": "number",
+                "description": "Fear & Greed Index by alternative.me (0-100).",
+                "nullable": true
+              },
+              "searchInterestHeat": {
+                "type": "number",
+                "description": "NakamotoNotes' 0-100 heat derived from Google search interest.",
+                "nullable": true
+              },
+              "searchInterest": {
+                "type": "number",
+                "description": "Search-interest reading (undocumented).",
+                "nullable": true
+              }
+            },
+            "additionalProperties": true
+          },
+          "indicatorHeats": {
+            "type": "object",
+            "description": "Per-indicator 0-100 heat, keyed by indicator name (same keys as indicators, minus searchInterest).",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "price": {
+            "type": "object",
+            "description": "Bitcoin price context (undocumented).",
+            "properties": {
+              "usd": {
+                "type": "number",
+                "description": "Bitcoin price in USD."
+              },
+              "change24hPct": {
+                "type": "number",
+                "description": "24-hour change (%)."
+              },
+              "change7dPct": {
+                "type": "number",
+                "description": "7-day change (%)."
+              },
+              "lastHourlyAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Time of the last hourly price point (ISO 8601)."
+              },
+              "asOf": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Time the price block was assembled (ISO 8601)."
+              }
+            },
+            "additionalProperties": true
+          },
+          "attribution": {
+            "type": "object",
+            "description": "Attribution strings keyed by indicator, e.g. fearAndGreed.",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "methodology": {
+            "type": "string",
+            "description": "Methodology page URL."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "URL of a rendered barometer image."
+          },
+          "app": {
+            "type": "string",
+            "description": "Mobile app link."
+          },
+          "license": {
+            "type": "string",
+            "description": "Licence statement (CC BY 4.0, attribute NakamotoNotes)."
+          }
+        },
+        "required": [
+          "score",
+          "zone",
+          "computedAt"
+        ],
+        "additionalProperties": true
+      },
+      "Badge": {
+        "type": "object",
+        "description": "Current score and zone as a Shields.io endpoint badge.",
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "description": "Shields endpoint schema version (1)."
+          },
+          "label": {
+            "type": "string",
+            "description": "Badge label."
+          },
+          "message": {
+            "type": "string",
+            "description": "Badge message, e.g. '24 · Chill'."
+          },
+          "color": {
+            "type": "string",
+            "description": "Badge colour name."
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "label",
+          "message"
+        ],
+        "additionalProperties": true
+      }
+    }
+  }
+}

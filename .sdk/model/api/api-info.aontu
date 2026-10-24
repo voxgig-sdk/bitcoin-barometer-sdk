@@ -1,0 +1,29 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      auth: false
+      contact: {
+        url: "https://nakamotonotes.com/open"
+      }
+      description: "Nakamoto Notes' open Bitcoin Barometer feed: a composite 0-100 Heat Score and zone describing Bitcoin's market-cycle position against history (not a price forecast). Keyless; documented limit 10 requests per minute, responses cached 5 minutes, HTTP 503 instead of a number when a reading cannot be produced. Licence CC BY 4.0 (attribute NakamotoNotes). Built from https://nakamotonotes.com/open and live probes on 2026-10-23; the live payload carries undocumented price, indicatorHeats, zoneBands and searchInterest fields. Omitted: barometer-history.csv (daily date,score,zone CSV), rss.xml, and the MCP server. Unverified: the item type of `degraded` (only an empty list seen) and the 503 body."
+      license: {
+        name: "CC BY 4.0"
+        url: "https://creativecommons.org/licenses/by/4.0/"
+      }
+      servers: [
+        {
+          description: "Production server"
+          url: "https://nakamotonotes.com/open"
+        }
+      ]
+      summary: "Nakamoto Notes' open Bitcoin Barometer feed: a composite 0-100 Heat Score and zone describing Bitcoin's market-cycle position against history (not a price forecast)."
+      title: "Bitcoin Barometer API"
+      version: "1.0.0"
+      website: "https://nakamotonotes.com"
+    }
+  }
+}
+

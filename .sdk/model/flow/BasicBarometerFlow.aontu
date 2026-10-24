@@ -1,0 +1,22 @@
+# BasicBarometerFlow
+
+main: kit: flow: BasicBarometerFlow:
+{
+  entity: "barometer",
+  kind: "basic",
+  name: "BasicBarometerFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "barometer_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicBarometerFlow"
+}

@@ -1,0 +1,64 @@
+# Entity: barometer
+
+main: kit: entity: barometer: {
+
+  alias: field: {}
+
+  fields: {
+    max: {
+      h: "Max"
+      n: "max"
+      r: false
+      sh: "Highest score in the zone."
+      t: "`$INTEGER`"
+    }
+    min: {
+      h: "Min"
+      n: "min"
+      r: false
+      sh: "Lowest score in the zone."
+      t: "`$INTEGER`"
+    }
+    zone: {
+      h: "Zone"
+      n: "zone"
+      r: false
+      sh: "Zone name."
+      t: "`$STRING`"
+    }
+  }
+
+  name: "barometer"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /barometer.json"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/barometer.json"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "barometer.json"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

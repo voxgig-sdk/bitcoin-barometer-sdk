@@ -1,0 +1,44 @@
+{
+  "existing": {
+    "badge": {
+      "BADGE00": {
+        "color": "s28",
+        "label": "s29",
+        "message": "s2a",
+        "schemaVersion": 43,
+        "id": "BADGE00"
+      },
+      "BADGE01": {
+        "color": "s50",
+        "label": "s51",
+        "message": "s52",
+        "schemaVersion": 83,
+        "id": "BADGE01"
+      },
+      "BADGE02": {
+        "color": "s78",
+        "label": "s79",
+        "message": "s7a",
+        "schemaVersion": 123,
+        "id": "BADGE02"
+      }
+    }
+  },
+  "new": {
+    "badge": {
+      "badge_ref01": {
+        "color": "sa0",
+        "label": "sa1",
+        "message": "sa2",
+        "schemaVersion": 163
+      }
+    }
+  },
+  "requests": {
+    "GET /badge.json": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

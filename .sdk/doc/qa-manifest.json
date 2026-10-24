@@ -1,0 +1,22 @@
+{
+  "files": [
+    "SUMMARY.md"
+  ],
+  "config": ".sdk/doc/qa/vale.ini",
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "Badge colour name.",
+      "Badge label.",
+      "Badge message, for example &#39;24 · Chill&#39;.",
+      "Highest score in the zone.",
+      "Lowest score in the zone.",
+      "Nakamoto Notes&#39; open Bitcoin Barometer feed: a composite 0-100 Heat Score and zone describing Bitcoin&#39;s market-cycle position against history (not a price forecast). Keyless; documented limit 10 requests per minute, responses cached 5 minutes, HTTP 503 instead of a number when a reading cannot be produced. Licence CC BY 4.0 (attribute NakamotoNotes). Built from https://nakamotonotes.com/open and live probes on 2026-10-23; the live payload carries undocumented price, indicatorHeats, zoneBands and searchInterest fields. Omitted: barometer-history.csv (daily date,score,zone CSV), rss.xml, and the MCP server. Unverified: the item type of `degraded` (only an empty list seen) and the 503 body.",
+      "Production server",
+      "Shields endpoint schema version (1).",
+      "The badge payload",
+      "The current reading",
+      "Zone for the score: Chill, Neutral, Heated or Euphoric."
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+# Entity: badge
+
+main: kit: entity: badge: {
+
+  alias: field: {}
+
+  fields: {
+    color: {
+      h: "Color"
+      n: "color"
+      r: false
+      sh: "Badge colour name."
+      t: "`$STRING`"
+    }
+    label: {
+      h: "Label"
+      n: "label"
+      r: true
+      sh: "Badge label."
+      t: "`$STRING`"
+    }
+    message: {
+      h: "Message"
+      n: "message"
+      r: true
+      sh: "Badge message, e.g."
+      t: "`$STRING`"
+    }
+    schemaVersion: {
+      h: "Schema Version"
+      n: "schemaVersion"
+      r: true
+      sh: "Shields endpoint schema version (1)."
+      t: "`$INTEGER`"
+    }
+  }
+
+  name: "badge"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /badge.json"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/badge.json"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "badge.json"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}
